@@ -1,7 +1,3 @@
-/**
- * components/repo/RepoCard.jsx
- */
-
 import { motion }        from 'framer-motion';
 import { FiClock, FiCode } from 'react-icons/fi';
 import Tag               from '../ui/Tag';
@@ -28,7 +24,6 @@ const LANG_VARIANT = {
   Rust: 'amber', Go: 'sky', Ruby: 'red', Java: 'amber',
   'C++': 'sky', C: 'sky', Swift: 'amber', Kotlin: 'amber',
 };
-
 const TEXT = {
   fontFamily: 'var(--font-body)',
   fontSize:   '13px',
@@ -37,9 +32,7 @@ const TEXT = {
 
 export default function RepoCard({ repo, index = 0 }) {
   const { name, url, description, language, lastCommitDate } = repo;
-
   const langVariant = LANG_VARIANT[language] ?? 'default';
-
   return (
     <motion.article
       initial={{ opacity: 0, y: 12 }}
@@ -69,7 +62,6 @@ export default function RepoCard({ repo, index = 0 }) {
       >
         {name}
       </a>
-
       {/* ── Row 2: description ── */}
       {description && (
         <p style={{
@@ -84,7 +76,6 @@ export default function RepoCard({ repo, index = 0 }) {
           {description}
         </p>
       )}
-
       {/* ── Row 3: language tag + last commit ── */}
       <div style={{
         display:    'flex',
@@ -96,7 +87,6 @@ export default function RepoCard({ repo, index = 0 }) {
         borderTop:  '1px solid var(--border)',
       }}>
         {language && <Tag icon={FiCode} variant={langVariant}>{language}</Tag>}
-
         {lastCommitDate && (
           <span style={{ ...TEXT, display: 'flex', alignItems: 'center', gap: '5px', fontSize: '12px' }}>
             <FiClock size={12} style={{ color: 'var(--p-low)' }} />
@@ -111,7 +101,6 @@ export default function RepoCard({ repo, index = 0 }) {
           </span>
         )}
       </div>
-
       {/* ── Row 4: Project Summary button ── */}
       <div style={{ marginTop: '14px' }}>
         <AISummarizeButton repo={repo} />
@@ -119,4 +108,3 @@ export default function RepoCard({ repo, index = 0 }) {
     </motion.article>
   );
 }
-
