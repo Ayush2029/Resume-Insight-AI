@@ -4,6 +4,12 @@
 
 **Upload a resume PDF → automatically extract GitHub profile → analyze every repository with AI-powered summaries**
 
+[![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)](https://nextjs.org)
+[![React](https://img.shields.io/badge/React-18-blue?style=flat-square&logo=react)](https://react.dev)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-38bdf8?style=flat-square&logo=tailwindcss)](https://tailwindcss.com)
+[![Groq](https://img.shields.io/badge/Groq-Llama_3.3-orange?style=flat-square)](https://console.groq.com)
+[![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
+
 </div>
 
 ---
@@ -12,31 +18,23 @@
 
 - [Overview](#overview)
 - [Features](#features)
-- [Live Demo](#live-demo)
 - [Tech Stack](#tech-stack)
 - [How It Works](#how-it-works)
 - [Project Directory Structure](#project-directory-structure)
-- [File Reference](#file-reference)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
   - [Environment Variables](#environment-variables)
   - [Running Locally](#running-locally)
-- [API Reference](#api-reference)
-- [Design System](#design-system)
 - [Deployment](#deployment)
-  - [Vercel](#vercel)
-  - [Railway](#railway)
-  - [Render](#render)
 - [Known Limitations](#known-limitations)
-- [Contributing](#contributing)
 - [License](#license)
 
 ---
 
 ## Overview
 
-Resume GitHub Analyzer is a full-stack Next.js web application that bridges the gap between a candidate's resume and their actual code. It accepts a PDF resume as input, automatically finds the GitHub profile URL embedded in it (whether as a hyperlink or plain text), fetches the complete GitHub profile along with all public repositories, and presents the data in a clean interface with the option to generate an AI-powered project summary for any repository.
+Resume-Insight-AI is a full-stack Next.js web application that bridges the gap between a candidate's resume and their actual code. It accepts a PDF resume as input, automatically finds the GitHub profile URL embedded in it — whether as a clickable hyperlink or plain text — fetches the complete GitHub profile along with all public repositories, and presents the data in a clean interface with the option to generate an AI-powered project summary for any repository.
 
 The AI summarization is powered by **Groq's free tier API** running the **Llama 3.3 70B** model — no credit card required, no paid subscription needed.
 
@@ -53,40 +51,36 @@ The AI summarization is powered by **Groq's free tier API** running the **Llama 
   - Generates a fresh summary every time you click — no caching
 - **3-Step Progress Indicator** — Visual feedback during PDF upload, link extraction, and profile fetching
 - **Skeleton Loading States** — Shimmer placeholders while data loads
-- **Toast Notifications** — Non-intrusive popup for "No GitHub links found" errors
-- **Dark Terminal Aesthetic** — Dot-grid background, lime green accents, clean typography
+- **Toast Notifications** — Non-intrusive popup when no GitHub links are found in the PDF
 - **Fully Responsive** — Works on mobile, tablet, and desktop
-
----
-
-## Live Demo
-
-> Deploy your own instance following the [Deployment](#deployment) section below.
 
 ---
 
 ## Tech Stack
 
 ### Frontend
+
 | Technology | Version | Purpose |
 |-----------|---------|---------|
 | Next.js | 14 | React framework, file-based routing, API routes |
 | React | 18 | UI library |
-| Framer Motion | 11 | Animations and transitions |
+| Framer Motion | 11 | Animations and page transitions |
 | Tailwind CSS | 3 | Utility-first styling |
 | React Icons | 5 | Icon library (Feather icons) |
-| Fira Code | — | Display / monospace font |
-| DM Sans | — | Body text font |
+| Fira Code | — | Monospace font for step indicators |
+| DM Sans | — | Body font for all UI text |
 
 ### Backend (API Routes)
+
 | Technology | Version | Purpose |
 |-----------|---------|---------|
-| pdfjs-dist | 5 | PDF parsing and text/annotation extraction |
+| pdfjs-dist | 5 | PDF parsing — annotation and text extraction |
 | formidable | 3 | Multipart file upload handling |
 | marked | 13 | Markdown to HTML conversion |
-| isomorphic-dompurify | 2 | HTML sanitization (XSS prevention) |
+| isomorphic-dompurify | 2 | HTML sanitization to prevent XSS |
 
-### AI & External APIs
+### AI and External APIs
+
 | Service | Purpose | Cost |
 |---------|---------|------|
 | Groq API (Llama 3.3 70B) | Repository summarization | Free — 30 req/min, 1000 req/day |
@@ -104,9 +98,9 @@ User uploads PDF resume
 │  POST /api/extract                       │
 │                                          │
 │  formidable parses multipart upload      │
-│  pdfjs-dist reads PDF annotations        │
-│    → Strategy 1: hyperlink annotations   │
-│    → Strategy 2: visible text scan       │
+│  pdfjs-dist reads PDF file               │
+│    Strategy 1: hyperlink annotations     │
+│    Strategy 2: visible text scan         │
 │  Returns: deduplicated github.com URLs   │
 └─────────────────────┬───────────────────┘
                       │
@@ -120,12 +114,12 @@ User uploads PDF resume
 │  POST /api/github-profile                │
 │                                          │
 │  GitHub API calls (all parallel):        │
-│    getUser()          → profile fields   │
-│    getUserRepos()     → repo list        │
-│    per repo:                             │
-│      getContributors() → commit count   │
-│      getCommits()      → last commit    │
-│      fetchReadmeRaw()  → readme text    │
+│    getUser()           → profile fields  │
+│    getUserRepos()      → repo list       │
+│    per repo (parallel):                  │
+│      getContributors() → commit count    │
+│      getCommits()      → last commit     │
+│      fetchReadmeRaw()  → readme text     │
 │                                          │
 │  Returns: { profile, repos[] }           │
 └─────────────────────┬───────────────────┘
@@ -140,11 +134,11 @@ User uploads PDF resume
 ┌─────────────────────────────────────────┐
 │  POST /api/summarize                     │
 │                                          │
-│  If README present (>80 chars):          │
+│  If README present (> 80 chars):         │
 │    → Send README to Groq                 │
 │  Else:                                   │
 │    → getFileTree() from GitHub           │
-│    → getFileContent() for top 4 files   │
+│    → getFileContent() for top 4 files    │
 │    → Send file context to Groq           │
 │                                          │
 │  Groq (Llama 3.3 70B) generates summary  │
@@ -157,58 +151,58 @@ User uploads PDF resume
 ## Project Directory Structure
 
 ```
-resume-github-analyzer/
+resume-insight-ai/
 │
-├── .env.local                          ← Your actual keys (never commit this)
+├── .env.local
 ├── .gitignore
-├── next.config.js                      ← Next.js config + webpack canvas alias fix
-├── tailwind.config.js                  ← Custom colors, fonts, animations
+├── next.config.js
+├── tailwind.config.js
 ├── postcss.config.js
 ├── package.json
 │
-├── pages/                              ← Next.js Pages Router
-│   ├── _app.js                         ← Root: font setup (Fira Code + DM Sans)
-│   ├── index.js                        ← Main page: Resume Analyzer
-│   └── api/                            ← Server-side API routes
-│       ├── extract.js                  ← POST /api/extract
-│       ├── github-profile.js           ← POST /api/github-profile
-│       └── summarize.js                ← POST /api/summarize
+├── pages/
+│   ├── _app.js
+│   ├── index.js
+│   └── api/
+│       ├── extract.js
+│       ├── github-profile.js
+│       └── summarize.js
 │
-├── lib/                                ← Pure logic — no React, no HTTP handlers
+├── lib/
 │   ├── pdf/
-│   │   ├── extractLinks.js             ← PDF parsing (server-side, uses fs)
-│   │   └── parseUrl.js                 ← URL parsing (browser-safe, no fs)
+│   │   ├── extractLinks.js
+│   │   └── parseUrl.js
 │   ├── github/
-│   │   ├── client.js                   ← GitHub API fetch wrapper
-│   │   └── profile.js                  ← Profile + repo data assembly
+│   │   ├── client.js
+│   │   └── profile.js
 │   └── ai/
-│       └── summarize.js                ← Groq API call + file-tree fallback
+│       └── summarize.js
 │
 ├── components/
 │   ├── layout/
-│   │   └── PageShell.jsx               ← Page wrapper: dot-grid bg + content area
-│   ├── ui/                             ← Stateless reusable primitives
-│   │   ├── Spinner.jsx                 ← Animated SVG loading ring
-│   │   ├── ErrorBanner.jsx             ← Inline error + toast popup
-│   │   ├── SkeletonBlock.jsx           ← Shimmer placeholder block
-│   │   ├── Tag.jsx                     ← Pill badge (language, etc.)
-│   │   └── StatPill.jsx                ← Icon + label + value stat tile
+│   │   └── PageShell.jsx
+│   ├── ui/
+│   │   ├── Spinner.jsx
+│   │   ├── ErrorBanner.jsx
+│   │   ├── SkeletonBlock.jsx
+│   │   ├── Tag.jsx
+│   │   └── StatPill.jsx
 │   ├── resume/
-│   │   ├── DropZone.jsx                ← Drag-and-drop PDF upload area
-│   │   └── StepIndicator.jsx           ← 3-step animated progress bar
+│   │   ├── DropZone.jsx
+│   │   └── StepIndicator.jsx
 │   ├── profile/
-│   │   ├── ProfileHeader.jsx           ← Avatar, name, bio, meta, stats
-│   │   └── ProfileSkeleton.jsx         ← Shimmer placeholder for profile
+│   │   ├── ProfileHeader.jsx
+│   │   └── ProfileSkeleton.jsx
 │   └── repo/
-│       ├── RepoCard.jsx                ← Single repo: name, desc, language, date
-│       ├── RepoList.jsx                ← Section header + list of RepoCards
-│       └── AISummarizeButton.jsx       ← Per-repo Groq summary button
+│       ├── RepoCard.jsx
+│       ├── RepoList.jsx
+│       └── AISummarizeButton.jsx
 │
 ├── hooks/
-│   └── useResumeAnalyzer.js            ← State machine for the full pipeline
+│   └── useResumeAnalyzer.js
 │
 └── styles/
-    └── globals.css                     ← CSS variables, base styles, utilities
+    └── globals.css
 ```
 
 ---
@@ -218,14 +212,13 @@ resume-github-analyzer/
 ### Prerequisites
 
 - **Node.js** v18 or higher — [nodejs.org](https://nodejs.org)
-- **npm** v9 or higher (comes with Node.js)
-- A **GitHub account** (for the token)
-- A **Google account** (for the Groq key)
+- **npm** v9 or higher (included with Node.js)
+- A **GitHub account** (for the personal access token)
+- A **Google or email account** (for the Groq API key)
 
-Verify your Node version:
 ```bash
-node -v   # should print v18.x.x or higher
-npm -v    # should print 9.x.x or higher
+node -v   # must be v18.0.0 or higher
+npm -v    # must be 9.0.0 or higher
 ```
 
 ---
@@ -234,10 +227,10 @@ npm -v    # should print 9.x.x or higher
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/resume-github-analyzer.git
+git clone https://github.com/your-username/resume-insight-ai.git
 
-# Navigate into the project
-cd resume-github-analyzer
+# Navigate into the project folder
+cd resume-insight-ai
 
 # Install all dependencies
 npm install
@@ -247,31 +240,22 @@ npm install
 
 ### Environment Variables
 
-Create a `.env.local` file in the project root. Then open `.env.local` and fill in your keys:
+Create a `.env.local` file in the project root and add both keys:
 
 ```env
-# ─────────────────────────────────────────────────────────────────
-# GROQ API KEY  
-# Steps to get your key:
-#   1. Go to https://console.groq.com
-#   2. Sign up with Google or email
-#   3. Navigate to API Keys → Create API Key
-#   4. Copy the key (starts with gsk_)
-# ─────────────────────────────────────────────────────────────────
+# GROQ API KEY  (required — for AI Project Summary feature)
+# Get your free key at: https://console.groq.com
+# Steps: Sign up → API Keys → Create API Key (starts with gsk_)
 GROQ_API_KEY=gsk_your_groq_api_key_here
-# ─────────────────────────────────────────────────────────────────
-# GITHUB TOKEN  
-# Steps to get your token:
-#   1. Go to https://github.com/settings/tokens
-#   2. Click "Generate new token (classic)"
-#   3. Give it any name e.g. "resume-analyzer"
-#   4. DO NOT check any scopes (public data only)
-#   5. Click "Generate token" and copy it 
-# ─────────────────────────────────────────────────────────────────
+
+# GITHUB TOKEN  (optional but strongly recommended)
+# Without token: 60 requests/hour. With token: 5000 requests/hour.
+# Get it at: https://github.com/settings/tokens
+# Steps: Generate new token (classic) → no scopes needed → copy (starts with ghp_)
 GITHUB_TOKEN=ghp_your_github_token_here
 ```
 
-> **Important:** Never commit `.env.local` to Git. It is already included in `.gitignore`.
+> `.env.local` is listed in `.gitignore` and will never be committed to Git.
 
 ---
 
@@ -286,8 +270,8 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | Command | Description |
 |---------|-------------|
 | `npm run dev` | Start development server with hot reload |
-| `npm run build` | Build for production |
-| `npm run start` | Start production server (requires build first) |
+| `npm run build` | Build optimized production bundle |
+| `npm run start` | Start production server (run build first) |
 
 ---
 
@@ -296,23 +280,37 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ### Render
 
 1. Go to [render.com](https://render.com) and create a new **Web Service**
-2. Connect your GitHub repository
-3. Configure:
-   ```
-   Language:      Node
-   Branch:        main
-   Region:        Singapore (or closest to you)
-   Build Command: npm install && npm run build
-   Start Command: npm run start
-   ```
-4. Add environment variables under the **Environment** tab:
-   ```
-   GROQ_API_KEY=gsk_...
-   GITHUB_TOKEN=ghp_...
-   ```
-5. Leave PORT as the default `10000`
+2. Connect your GitHub repository and set:
 
-> **Note:** Render's free tier spins down after 15 minutes of inactivity, causing a 30–60 second cold start for the next visitor.
+   | Field | Value |
+   |-------|-------|
+   | Language | Node |
+   | Branch | main |
+   | Region | Singapore (or nearest to you) |
+   | Build Command | `npm install && npm run build` |
+   | Start Command | `npm run start` |
+   | Port | 10000 (default) |
+
+3. Under the **Environment** tab add:
+   ```
+   GROQ_API_KEY= "OWN_API_KEY"
+   GITHUB_TOKEN= "OWN_API_KEY"
+   ```
+4. Click **Create Web Service**
+
+> Free tier spins down after 15 minutes of inactivity — first load after idle takes 30–60 seconds.
+
+---
+
+## Known Limitations
+
+| Issue | Detail |
+|-------|--------|
+| Scanned PDFs | Image-based scanned resumes cannot be parsed — only text-based PDFs work |
+| GitHub profile link required | PDF must contain `github.com/username` — repository-only links are not enough |
+| GitHub rate limits | Without token: 60 req/hr. With token: 5000 req/hr |
+| Groq rate limits | Free tier: 30 req/min, 1000 req/day |
+| Private repositories | Only public repositories are fetched |
 
 ---
 
