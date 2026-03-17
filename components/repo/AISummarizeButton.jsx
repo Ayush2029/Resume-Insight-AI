@@ -1,9 +1,3 @@
-/**
- * components/repo/AISummarizeButton.jsx
- * "Project Summary" button — calls /api/summarize fresh every click.
- * No collapse/expand toggle. Each click fetches a new summary.
- */
-
 import { useState }               from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiZap, FiAlertTriangle, FiRefreshCw, FiExternalLink } from 'react-icons/fi';
@@ -11,19 +5,15 @@ import Spinner from '../ui/Spinner';
 
 export default function AISummarizeButton({ repo }) {
   const [loading,  setLoading]  = useState(false);
-  const [result,   setResult]   = useState(null);   // { summary, source }
+  const [result,   setResult]   = useState(null);   
   const [isError,  setIsError]  = useState(false);
   const [isKeyErr, setIsKeyErr] = useState(false);
-
   async function handleClick() {
     if (loading) return;
-
-    // Reset previous result and fetch fresh every time
     setLoading(true);
     setResult(null);
     setIsError(false);
     setIsKeyErr(false);
-
     try {
       const res = await fetch('/api/summarize', {
         method:  'POST',
@@ -35,12 +25,9 @@ export default function AISummarizeButton({ repo }) {
           defaultBranch: repo.default_branch ?? 'main',
         }),
       });
-
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Summarization failed');
-
       setResult(data);
-
     } catch (err) {
       const keyErr = err.message.includes('GROQ_API_KEY');
       setIsKeyErr(keyErr);
@@ -50,24 +37,19 @@ export default function AISummarizeButton({ repo }) {
       setLoading(false);
     }
   }
-
-  /* ── Button style ── */
   const btnBg     = loading  ? 'var(--c-800)'      : result && !isError ? 'var(--c-800)'     : 'var(--lime-soft)';
   const btnColor  = loading  ? 'var(--p-mid)'      : result && !isError ? 'var(--p-mid)'     : 'var(--lime)';
   const btnBorder = loading  ? 'var(--border)'     : result && !isError ? 'var(--border)'    : 'rgba(181,248,87,.18)';
-
   const BtnIcon = loading
     ? () => <Spinner size={12} color={btnColor} />
     : result
     ? FiRefreshCw
     : FiZap;
-
   const btnLabel = loading
     ? 'Generating...'
     : result
     ? 'Regenerate Summary'
     : 'Project Summary';
-
   return (
     <div>
       {/* ── Button ── */}
@@ -95,7 +77,6 @@ export default function AISummarizeButton({ repo }) {
         <BtnIcon size={12} />
         {btnLabel}
       </button>
-
       {/* ── Result — always visible once fetched, replaced on next click ── */}
       <AnimatePresence mode="wait">
         {result && (
