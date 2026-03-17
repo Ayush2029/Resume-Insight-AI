@@ -83,70 +83,10 @@ The AI summarization is powered by **Groq's free tier API** running the **Llama 
 
 ### AI and External APIs
 
-| Service | Purpose | Cost |
-|---------|---------|------|
-| Groq API (Llama 3.3 70B) | Repository summarization | Free — 30 req/min, 1000 req/day |
-| GitHub REST API v3 | Profile and repository data | Free — 5000 req/hr with token |
-
----
-
-## How It Works
-
-```
-User uploads PDF resume
-         │
-         ▼
-┌─────────────────────────────────────────┐
-│  POST /api/extract                       │
-│                                          │
-│  formidable parses multipart upload      │
-│  pdfjs-dist reads PDF file               │
-│    Strategy 1: hyperlink annotations     │
-│    Strategy 2: visible text scan         │
-│  Returns: deduplicated github.com URLs   │
-└─────────────────────┬───────────────────┘
-                      │
-                      ▼
-         parseGithubUrl() on each link
-         Find first user profile URL
-         Extract username
-                      │
-                      ▼
-┌─────────────────────────────────────────┐
-│  POST /api/github-profile                │
-│                                          │
-│  GitHub API calls (all parallel):        │
-│    getUser()           → profile fields  │
-│    getUserRepos()      → repo list       │
-│    per repo (parallel):                  │
-│      getContributors() → commit count    │
-│      getCommits()      → last commit     │
-│      fetchReadmeRaw()  → readme text     │
-│                                          │
-│  Returns: { profile, repos[] }           │
-└─────────────────────┬───────────────────┘
-                      │
-                      ▼
-         ProfileHeader + RepoList rendered
-                      │
-                      ▼
-         User clicks "Project Summary"
-                      │
-                      ▼
-┌─────────────────────────────────────────┐
-│  POST /api/summarize                     │
-│                                          │
-│  If README present (> 80 chars):         │
-│    → Send README to Groq                 │
-│  Else:                                   │
-│    → getFileTree() from GitHub           │
-│    → getFileContent() for top 4 files    │
-│    → Send file context to Groq           │
-│                                          │
-│  Groq (Llama 3.3 70B) generates summary  │
-│  Returns: { summary, source }            │
-└─────────────────────────────────────────┘
-```
+| Service | Purpose | 
+|---------|---------|
+| Groq API (Llama 3.3 70B) | Repository summarization |
+| GitHub REST API v3 | Profile and repository data |
 
 ---
 
@@ -245,14 +185,11 @@ npm install
 Create a `.env.local` file in the project root and add both keys:
 
 ```env
-# GROQ API KEY  (required — for AI Project Summary feature)
-# Get your free key at: https://console.groq.com
+# GROQ API KEY 
 # Steps: Sign up → API Keys → Create API Key (starts with gsk_)
 GROQ_API_KEY=gsk_your_groq_api_key_here
 
-# GITHUB TOKEN  (optional but strongly recommended)
-# Without token: 60 requests/hour. With token: 5000 requests/hour.
-# Get it at: https://github.com/settings/tokens
+# GITHUB TOKEN  
 # Steps: Generate new token (classic) → no scopes needed → copy (starts with ghp_)
 GITHUB_TOKEN=ghp_your_github_token_here
 ```
@@ -313,12 +250,6 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | GitHub rate limits | Without token: 60 req/hr. With token: 5000 req/hr |
 | Groq rate limits | Free tier: 30 req/min, 1000 req/day |
 | Private repositories | Only public repositories are fetched |
-
----
-
-## License
-
-MIT License — see [LICENSE](LICENSE) for details.
 
 ---
 
