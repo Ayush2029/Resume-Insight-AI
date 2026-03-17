@@ -252,9 +252,3 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 | Private repositories | Only public repositories are fetched |
 
 ---
-
-<div align="center">
-
-Built with Next.js, Groq, and the GitHub API
-
-</div>
