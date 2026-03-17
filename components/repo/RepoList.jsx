@@ -74,9 +74,7 @@ export default function RepoList({ repos, loading = false }) {
             ({repos.length} found)
           </span>
         </h3>
-
       </div>
-
       {/* Cards */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
         {repos.map((repo, i) => (
