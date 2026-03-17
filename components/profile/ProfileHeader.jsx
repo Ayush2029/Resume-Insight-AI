@@ -1,7 +1,3 @@
-/**
- * components/profile/ProfileHeader.jsx
- */
-
 import { motion }  from 'framer-motion';
 import {
   FiUsers, FiBookOpen, FiCalendar, FiTwitter,
@@ -34,7 +30,6 @@ function MetaItem({ icon: Icon, href, children }) {
     color:      'var(--p-mid)',
     transition: 'color 0.14s',
   };
-
   if (href) {
     return (
       <a
@@ -58,10 +53,8 @@ export default function ProfileHeader({ profile }) {
     public_repos, followers, following,
     company, blog, twitter, socials = [], created_at,
   } = profile;
-
   const blogHref    = normBlog(blog);
   const blogDisplay = blog?.replace(/^https?:\/\/|^\/\//, '');
-
   return (
     <motion.section
       initial={{ opacity: 0, y: 16 }}
@@ -72,7 +65,6 @@ export default function ProfileHeader({ profile }) {
     >
       {/* Lime top bar */}
       <div style={{ height: '3px', background: 'linear-gradient(90deg, var(--lime), var(--lime-dim), transparent)' }} />
-
       {/* Body */}
       <div style={{ padding: '24px' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
@@ -102,7 +94,6 @@ export default function ProfileHeader({ profile }) {
               >
                 {name}
               </h2>
-
               {bio && (
                 <p style={{
                   fontSize:   '13px',
@@ -114,7 +105,6 @@ export default function ProfileHeader({ profile }) {
                   {bio}
                 </p>
               )}
-
               {/* Meta row */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
                 {company    && <MetaItem icon={FiMapPin}>{company}</MetaItem>}
@@ -129,14 +119,12 @@ export default function ProfileHeader({ profile }) {
               </div>
             </div>
           </div>
-
           {/* Stat pills */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
             <StatPill icon={FiBookOpen}  label="Repositories" value={(public_repos ?? 0).toLocaleString()} />
             <StatPill icon={FiUsers}     label="Followers"    value={(followers    ?? 0).toLocaleString()} />
             <StatPill icon={FiUserCheck} label="Following"    value={(following    ?? 0).toLocaleString()} />
           </div>
-
         </div>
       </div>
     </motion.section>
