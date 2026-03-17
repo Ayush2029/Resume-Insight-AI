@@ -159,7 +159,6 @@ User uploads PDF resume
 ```
 resume-github-analyzer/
 │
-├── .env.example                        ← Environment variable template
 ├── .env.local                          ← Your actual keys (never commit this)
 ├── .gitignore
 ├── next.config.js                      ← Next.js config + webpack canvas alias fix
