@@ -22,7 +22,6 @@
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [How It Works](#how-it-works)
-- [Project Directory Structure](#project-directory-structure)
 - [Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Installation](#installation)
@@ -30,7 +29,6 @@
   - [Running Locally](#running-locally)
 - [Deployment](#deployment)
 - [Known Limitations](#known-limitations)
-- [License](#license)
 
 ---
 
