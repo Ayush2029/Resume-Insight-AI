@@ -1,11 +1,6 @@
-/**
- * components/layout/PageShell.jsx
- */
-
 export default function PageShell({ children }) {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--c-950)' }}>
-
       {/* Dot grid background */}
       <div
         aria-hidden="true"
@@ -19,7 +14,6 @@ export default function PageShell({ children }) {
           opacity:         0.25,
         }}
       />
-
       {/* Radial glow at top-center */}
       <div
         aria-hidden="true"
@@ -35,7 +29,6 @@ export default function PageShell({ children }) {
           zIndex:        0,
         }}
       />
-
       {/* ── Content ── */}
       <main
         style={{
