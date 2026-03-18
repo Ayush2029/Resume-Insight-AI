@@ -1,4 +1,3 @@
-/** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
     './pages/**/*.{js,jsx}',
@@ -12,7 +11,6 @@ module.exports = {
         mono:    ['var(--font-mono)',    'monospace'],
       },
       colors: {
-        /* Dark canvas */
         canvas: {
           950: '#0a0c10',
           900: '#0d1117',
@@ -22,24 +20,20 @@ module.exports = {
           500: '#484f58',
           400: '#6e7681',
         },
-        /* Lime accent */
         lime: {
           400: '#b5f857',
           500: '#9de64e',
           600: '#7ec832',
           700: '#5a9020',
         },
-        /* Amber accent */
         amber: {
           400: '#f0a500',
           500: '#d4920a',
         },
-        /* Sky accent */
         sky: {
           400: '#58b4f8',
           500: '#3b9de6',
         },
-        /* Text */
         prose: {
           high:   '#e6edf3',
           mid:    '#8b949e',
