@@ -31,7 +31,7 @@
 
 ---
 
-[![Live Demo](https://resume-insight-ai-agex.onrender.com)](https://resume-insight-ai-agex.onrender.com)
+[[Live Demo](https://resume-insight-ai-agex.onrender.com)](https://resume-insight-ai-agex.onrender.com)
 
 ## Overview
 
