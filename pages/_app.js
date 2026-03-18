@@ -1,7 +1,7 @@
 import '../styles/globals.css';
+import Head from 'next/head';
 import { Fira_Code, DM_Sans } from 'next/font/google';
 
-/* Monospace display — gives the terminal/code aesthetic */
 const firaCode = Fira_Code({
   subsets:  ['latin'],
   variable: '--font-display',
@@ -9,14 +9,12 @@ const firaCode = Fira_Code({
   display:  'swap',
 });
 
-/* Clean sans for body copy */
 const dmSans = DM_Sans({
   subsets:  ['latin'],
   variable: '--font-body',
   display:  'swap',
 });
 
-/* Mono for code snippets (reuse Fira Code) */
 const monoVar = Fira_Code({
   subsets:  ['latin'],
   variable: '--font-mono',
@@ -26,8 +24,15 @@ const monoVar = Fira_Code({
 
 export default function App({ Component, pageProps }) {
   return (
-    <div className={`${firaCode.variable} ${dmSans.variable} ${monoVar.variable}`}>
-      <Component {...pageProps} />
-    </div>
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta name="theme-color" content="#0a0c10" />
+        <title>Resume Insight AI</title>
+      </Head>
+      <div className={`${firaCode.variable} ${dmSans.variable} ${monoVar.variable}`}>
+        <Component {...pageProps} />
+      </div>
+    </>
   );
 }
