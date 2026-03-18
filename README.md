@@ -272,20 +272,21 @@ git push -u origin main
 
 ### Keeping the App Awake
 
-Render's free tier sleeps after 15 minutes of inactivity (first load after idle takes 30–60 seconds). Use [UptimeRobot](https://uptimerobot.com) to keep it awake for free:
+Render's free tier sleeps after 15 minutes of inactivity (first load after idle takes 30–60 seconds). Use [cron-job.org](https://cron-job.org) to keep it awake for free:
 
-1. Sign up at [uptimerobot.com](https://uptimerobot.com)
-2. **Add New Monitor** with these settings:
+1. Sign up at [cron-job.org](https://cron-job.org)
+2. Click **Create cronjob** with these settings:
 
 | Field | Value |
 |-------|-------|
-| Monitor Type | `HTTP(s)` |
-| Friendly Name | `Resume Insight AI` |
+| Title | `Resume Insight AI` |
 | URL | `https://resume-insight-ai.onrender.com` |
-| Monitoring Interval | `5 minutes` |
+| Execution schedule | Every 5 minutes (`*/5 * * * *`) |
+| Notify on failure | ✅ On |
+| Notify on success after failure | ✅ On |
 
-3. Click **Create Monitor**
+3. Click **Create**
 
-UptimeRobot pings your app every 5 minutes — Render never sleeps.
+cron-job.org pings your app every 5 minutes — Render never sleeps.
 
 ---
