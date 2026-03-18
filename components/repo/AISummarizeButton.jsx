@@ -31,7 +31,13 @@ export default function AISummarizeButton({ repo }) {
           defaultBranch: repo.default_branch ?? 'main',
         }),
       });
-      const data = await res.json();
+
+      // Read as text first — guards against HTML crash pages being returned
+      const text = await res.text();
+      let data;
+      try { data = JSON.parse(text); }
+      catch { throw new Error('Server error — please try again in a moment.'); }
+
       if (!res.ok) throw new Error(data.error || 'Summarization failed');
       setResult(data);
     } catch (err) {
