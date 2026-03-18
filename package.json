@@ -8,17 +8,15 @@
     "start": "next start"
   },
   "dependencies": {
-    "formidable":           "^3.5.1",
-    "framer-motion":        "^11.18.2",
-    "isomorphic-dompurify": "^2.13.0",
-    "marked":               "^13.0.1",
-    "next":                 "^15.2.4",
-    "pdfjs-dist":           "^5.4.394",
-    "react":                "^18.3.1",
-    "react-dom":            "^18.3.1",
-    "react-icons":          "^5.2.1"
-  },
-  "devDependencies": {
+    "formidable":              "^3.5.1",
+    "framer-motion":           "^11.18.2",
+    "isomorphic-dompurify":    "^2.13.0",
+    "marked":                  "^13.0.1",
+    "next":                    "^15.2.4",
+    "pdfjs-dist":              "^5.4.394",
+    "react":                   "^18.3.1",
+    "react-dom":               "^18.3.1",
+    "react-icons":             "^5.2.1",
     "@tailwindcss/typography": "^0.5.13",
     "autoprefixer":            "^10.4.19",
     "postcss":                 "^8.4.38",
