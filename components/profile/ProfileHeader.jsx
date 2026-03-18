@@ -1,3 +1,7 @@
+/**
+ * components/profile/ProfileHeader.jsx
+ */
+
 import { motion }  from 'framer-motion';
 import {
   FiUsers, FiBookOpen, FiCalendar, FiTwitter,
@@ -18,9 +22,11 @@ function normBlog(b) {
 
 function MetaItem({ icon: Icon, href, children }) {
   const inner = (
-    <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+    <span style={{ display: 'flex', alignItems: 'center', gap: '5px', minWidth: 0 }}>
       <Icon size={12} style={{ flexShrink: 0 }} />
-      {children}
+      <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+        {children}
+      </span>
     </span>
   );
 
@@ -29,7 +35,10 @@ function MetaItem({ icon: Icon, href, children }) {
     fontFamily: 'var(--font-body)',
     color:      'var(--p-mid)',
     transition: 'color 0.14s',
+    minWidth:   0,
+    maxWidth:   '100%',
   };
+
   if (href) {
     return (
       <a
@@ -53,60 +62,68 @@ export default function ProfileHeader({ profile }) {
     public_repos, followers, following,
     company, blog, twitter, socials = [], created_at,
   } = profile;
+
   const blogHref    = normBlog(blog);
   const blogDisplay = blog?.replace(/^https?:\/\/|^\/\//, '');
+
   return (
     <motion.section
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4 }}
       className="card"
-      style={{ overflow: 'hidden' }}
     >
       {/* Lime top bar */}
       <div style={{ height: '3px', background: 'linear-gradient(90deg, var(--lime), var(--lime-dim), transparent)' }} />
-      {/* Body */}
-      <div style={{ padding: '24px' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
-          {/* Avatar + name row */}
-          <div style={{ display: 'flex', gap: '18px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+      <div style={{ padding: 'clamp(16px, 4vw, 24px)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+
+          {/* Avatar + name — stacks on very small screens */}
+          <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
             <img
               src={avatar_url}
               alt={name}
-              width={72}
-              height={72}
+              width={64}
+              height={64}
               style={{
                 borderRadius: 'var(--r-md)',
                 border:       '2px solid var(--border)',
                 flexShrink:   0,
+                width:        'clamp(52px, 12vw, 72px)',
+                height:       'clamp(52px, 12vw, 72px)',
+                objectFit:    'cover',
               }}
             />
-            <div style={{ flex: 1, minWidth: '180px' }}>
+            <div style={{ flex: 1, minWidth: 0 }}>
               <h2
                 style={{
-                  fontFamily:  'var(--font-body)',
-                  fontWeight:  '700',
-                  fontSize:    '20px',
-                  color:       'var(--p-high)',
-                  margin:      '0 0 6px',
+                  fontFamily:   'var(--font-body)',
+                  fontWeight:   '700',
+                  fontSize:     'clamp(16px, 4vw, 20px)',
+                  color:        'var(--p-high)',
+                  margin:       '0 0 4px',
+                  wordBreak:    'break-word',
                 }}
               >
                 {name}
               </h2>
+
               {bio && (
                 <p style={{
-                  fontSize:   '13px',
+                  fontSize:   'clamp(12px, 3vw, 13px)',
                   color:      'var(--p-mid)',
                   fontFamily: 'var(--font-body)',
-                  margin:     '0 0 10px',
+                  margin:     '0 0 8px',
                   lineHeight: 1.55,
+                  wordBreak:  'break-word',
                 }}>
                   {bio}
                 </p>
               )}
-              {/* Meta row */}
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px' }}>
+
+              {/* Meta row — wraps naturally on mobile */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 14px', minWidth: 0 }}>
                 {company    && <MetaItem icon={FiMapPin}>{company}</MetaItem>}
                 {created_at && <MetaItem icon={FiCalendar}>Joined {fmt(created_at)}</MetaItem>}
                 {twitter    && <MetaItem icon={FiTwitter} href={`https://twitter.com/${twitter}`}>@{twitter}</MetaItem>}
@@ -119,12 +136,18 @@ export default function ProfileHeader({ profile }) {
               </div>
             </div>
           </div>
-          {/* Stat pills */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
-            <StatPill icon={FiBookOpen}  label="Repositories" value={(public_repos ?? 0).toLocaleString()} />
-            <StatPill icon={FiUsers}     label="Followers"    value={(followers    ?? 0).toLocaleString()} />
-            <StatPill icon={FiUserCheck} label="Following"    value={(following    ?? 0).toLocaleString()} />
+
+          {/* Stat pills — auto-fit so they wrap on narrow screens */}
+          <div style={{
+            display:               'grid',
+            gridTemplateColumns:   'repeat(auto-fit, minmax(90px, 1fr))',
+            gap:                   '8px',
+          }}>
+            <StatPill icon={FiBookOpen}  label="Repos"     value={(public_repos ?? 0).toLocaleString()} />
+            <StatPill icon={FiUsers}     label="Followers" value={(followers    ?? 0).toLocaleString()} />
+            <StatPill icon={FiUserCheck} label="Following" value={(following    ?? 0).toLocaleString()} />
           </div>
+
         </div>
       </div>
     </motion.section>
