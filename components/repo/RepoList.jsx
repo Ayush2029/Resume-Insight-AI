@@ -2,7 +2,6 @@ import { motion }     from 'framer-motion';
 import { FiGithub }   from 'react-icons/fi';
 import RepoCard       from './RepoCard';
 import SkeletonBlock  from '../ui/SkeletonBlock';
-
 function RepoSkeleton() {
   return (
     <div className="card" style={{ padding: '18px 20px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
@@ -19,7 +18,6 @@ function RepoSkeleton() {
     </div>
   );
 }
-
 export default function RepoList({ repos, loading = false }) {
   if (loading) {
     return (
@@ -31,7 +29,6 @@ export default function RepoList({ repos, loading = false }) {
       </section>
     );
   }
-
   if (!repos?.length) {
     return (
       <motion.div
@@ -54,7 +51,6 @@ export default function RepoList({ repos, loading = false }) {
       </motion.div>
     );
   }
-
   return (
     <section style={{ marginTop: '20px' }}>
       {/* Header */}
@@ -74,6 +70,7 @@ export default function RepoList({ repos, loading = false }) {
             ({repos.length} found)
           </span>
         </h3>
+
       </div>
       {/* Cards */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
