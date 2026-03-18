@@ -9,7 +9,6 @@ const VARIANTS = {
 
 export default function Tag({ children, variant = 'default', icon: Icon }) {
   const v = VARIANTS[variant] ?? VARIANTS.default;
-
   return (
     <span
       style={{
