@@ -32,11 +32,16 @@ export default function AISummarizeButton({ repo }) {
         }),
       });
 
-      // Read as text first — guards against HTML crash pages being returned
+      // Read as text first so we can show a real error even if HTML is returned
       const text = await res.text();
       let data;
-      try { data = JSON.parse(text); }
-      catch { throw new Error('Server error — please try again in a moment.'); }
+      try {
+        data = JSON.parse(text);
+      } catch {
+        // Server returned HTML (crash page) — log it and show a useful message
+        console.error('[summarize] non-JSON response:', text.slice(0, 200));
+        throw new Error('Summarization failed. Check that GROQ_API_KEY is set correctly in your environment variables.');
+      }
 
       if (!res.ok) throw new Error(data.error || 'Summarization failed');
       setResult(data);
