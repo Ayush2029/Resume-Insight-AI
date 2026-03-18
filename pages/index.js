@@ -1,7 +1,3 @@
-/**
- * pages/index.js — Resume Analyzer
- */
-
 import { motion, AnimatePresence } from 'framer-motion';
 import PageShell        from '../components/layout/PageShell';
 import DropZone         from '../components/resume/DropZone';
@@ -14,17 +10,13 @@ import useResumeAnalyzer from '../hooks/useResumeAnalyzer';
 
 export default function AnalyzerPage() {
   const { status, step, error, data, submit, reset } = useResumeAnalyzer();
-
   const isLoading = status === 'extracting' || status === 'fetching';
   const isReady   = status === 'ready';
-
   const loadingMsg =
     status === 'extracting' ? 'Scanning PDF for GitHub links…' :
     status === 'fetching'   ? 'Fetching GitHub profile & repositories…' : '';
-
   return (
     <PageShell>
-
       {/* ── Hero ── */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -59,7 +51,6 @@ export default function AnalyzerPage() {
           }} />
           AI-powered
         </div>
-
         <p style={{
           fontSize:   '15px',
           color:      'var(--p-mid)',
@@ -70,7 +61,6 @@ export default function AnalyzerPage() {
           Upload a resume PDF. We extract your GitHub profile and analyze every repo.
         </p>
       </motion.div>
-
       {/* ── Upload card ── */}
       <motion.div
         layout
@@ -84,7 +74,6 @@ export default function AnalyzerPage() {
         <div style={{ marginBottom: '24px' }}>
           <StepIndicator activeStep={step} />
         </div>
-
         {/* Loading status */}
         <AnimatePresence>
           {isLoading && loadingMsg && (
@@ -105,16 +94,13 @@ export default function AnalyzerPage() {
             </motion.p>
           )}
         </AnimatePresence>
-
         <DropZone onFile={submit} loading={isLoading} />
-
         {/* Error */}
         {error && (
           <div style={{ marginTop: '14px' }}>
             <ErrorBanner message={error} />
           </div>
         )}
-
         {/* Reset */}
         {isReady && (
           <div style={{ marginTop: '16px', textAlign: 'center' }}>
@@ -128,7 +114,6 @@ export default function AnalyzerPage() {
           </div>
         )}
       </motion.div>
-
       {/* ── Results ── */}
       <AnimatePresence mode="wait">
         {isLoading && (
@@ -137,7 +122,6 @@ export default function AnalyzerPage() {
             <RepoList repos={null} loading />
           </motion.div>
         )}
-
         {isReady && data && (
           <motion.div
             key="results"
@@ -151,7 +135,6 @@ export default function AnalyzerPage() {
           </motion.div>
         )}
       </AnimatePresence>
-
     </PageShell>
   );
 }
