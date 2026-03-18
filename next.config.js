@@ -1,11 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-
-  // Hide the Next.js Dev Tools button (the "N" in the corner during dev)
   devIndicators: false,
-
-  // Security headers
   async headers() {
     return [
       {
@@ -20,15 +16,26 @@ const nextConfig = {
       },
     ];
   },
-
   webpack: (config, { isServer }) => {
     if (isServer) {
-      // pdfjs-dist uses canvas as an optional dependency — suppress it
       config.resolve.alias.canvas   = false;
       config.resolve.alias.encoding = false;
     }
+    config.module = config.module ?? {};
+    config.module.rules = config.module.rules ?? [];
+    config.module.rules.push({
+      test: /node_modules\/pdfjs-dist/,
+      resolve: {
+        fullySpecified: false,
+      },
+    });
+    config.ignoreWarnings = [
+      ...(config.ignoreWarnings ?? []),
+      /Critical dependency: the request of a dependency is an expression/,
+      /Critical dependency: require function is used in a way/,
+    ];
     return config;
   },
+  serverExternalPackages: ['pdfjs-dist'],
 };
-
 module.exports = nextConfig;
