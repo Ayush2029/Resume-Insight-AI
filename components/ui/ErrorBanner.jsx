@@ -1,7 +1,3 @@
-/**
- * components/ui/ErrorBanner.jsx
- */
-
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiAlertCircle } from 'react-icons/fi';
 import { useState, useEffect } from 'react';
@@ -11,7 +7,6 @@ function Toast({ message, onClose }) {
     const t = setTimeout(onClose, 4000);
     return () => clearTimeout(t);
   }, [onClose]);
-
   return (
     <motion.div
       initial={{ opacity: 0, y: -12, scale: 0.97 }}
@@ -19,33 +14,30 @@ function Toast({ message, onClose }) {
       exit={{    opacity: 0, y: -12, scale: 0.97 }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
       style={{
-        position:    'fixed',
-        top:         '20px',
-        left:        '16px',
-        right:       '16px',
-        margin:      '0 auto',
-        /* Cap width on larger screens, full-width minus padding on mobile */
-        maxWidth:    '360px',
-        width:       'calc(100vw - 32px)',
-        zIndex:      9999,
-        display:     'flex',
-        alignItems:  'center',
-        gap:         '10px',
-        padding:     '12px 16px',
-        borderRadius:'var(--r-lg)',
-        background:  'var(--c-800)',
-        border:      '1px solid var(--border)',
-        boxShadow:   '0 8px 32px rgba(0,0,0,0.6)',
-        boxSizing:   'border-box',
+        position:       'fixed',
+        top:            '28px',
+        left:           0,
+        right:          0,
+        margin:         '0 auto',
+        width:          'fit-content',
+        maxWidth:       '360px',
+        zIndex:         9999,
+        display:        'flex',
+        alignItems:     'center',
+        gap:            '10px',
+        padding:        '12px 20px',
+        borderRadius:   'var(--r-lg)',
+        background:     'var(--c-800)',
+        border:         '1px solid var(--border)',
+        boxShadow:      '0 8px 32px rgba(0,0,0,0.6)',
       }}
     >
       <FiAlertCircle size={15} style={{ color: 'var(--amber)', flexShrink: 0 }} />
       <span style={{
-        fontSize:   'clamp(12px, 3.5vw, 13px)',
+        fontSize:   '13px',
         fontFamily: 'var(--font-body)',
         color:      'var(--p-high)',
-        flex:       1,
-        wordBreak:  'break-word',
+        whiteSpace: 'nowrap',
       }}>
         {message}
       </span>
@@ -55,16 +47,12 @@ function Toast({ message, onClose }) {
 
 export default function ErrorBanner({ message }) {
   const [visible, setVisible] = useState(false);
-
   useEffect(() => {
     if (message) setVisible(true);
     else setVisible(false);
   }, [message]);
-
   if (!message) return null;
-
   const isNoLinks = message.startsWith('No GitHub links found');
-
   if (isNoLinks) {
     return (
       <AnimatePresence>
@@ -77,7 +65,6 @@ export default function ErrorBanner({ message }) {
       </AnimatePresence>
     );
   }
-
   return (
     <AnimatePresence>
       {visible && (
@@ -88,19 +75,18 @@ export default function ErrorBanner({ message }) {
           exit={{    opacity: 0, height: 0 }}
           transition={{ duration: 0.2 }}
           style={{
-            overflow:   'hidden',
-            display:    'flex',
-            alignItems: 'flex-start',
-            gap:        '10px',
-            padding:    '12px 14px',
-            borderRadius:'var(--r-md)',
-            background: 'var(--red-soft)',
-            border:     '1px solid var(--red-border)',
-            color:      'var(--red)',
-            fontSize:   'clamp(12px, 3vw, 13px)',
-            lineHeight: '1.5',
-            fontFamily: 'var(--font-body)',
-            wordBreak:  'break-word',
+            overflow:     'hidden',
+            display:      'flex',
+            alignItems:   'flex-start',
+            gap:          '10px',
+            padding:      '12px 16px',
+            borderRadius: 'var(--r-md)',
+            background:   'var(--red-soft)',
+            border:       '1px solid var(--red-border)',
+            color:        'var(--red)',
+            fontSize:     '13px',
+            lineHeight:   '1.5',
+            fontFamily:   'var(--font-body)',
           }}
         >
           <FiAlertCircle size={14} style={{ flexShrink: 0, marginTop: '1px' }} />
