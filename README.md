@@ -31,6 +31,8 @@
 
 ---
 
+[![Live Demo](https://resume-insight-ai-agex.onrender.com)](https://resume-insight-ai-agex.onrender.com)
+
 ## Overview
 
 Resume-Insight-AI is a full-stack Next.js web application that bridges the gap between a candidate's resume and their actual code. It accepts a PDF resume as input, automatically finds the GitHub profile URL embedded in it — whether as a clickable hyperlink or plain text — fetches the complete GitHub profile along with all public repositories, and presents the data in a clean responsive interface with the option to generate an AI-powered project summary for any repository.
