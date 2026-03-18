@@ -1,8 +1,5 @@
 /**
  * components/ui/ErrorBanner.jsx
- *
- * "No GitHub links found" — centered toast that appears and auto-dismisses.
- * All other errors — inline banner below the dropzone.
  */
 
 import { motion, AnimatePresence } from 'framer-motion';
@@ -22,30 +19,33 @@ function Toast({ message, onClose }) {
       exit={{    opacity: 0, y: -12, scale: 0.97 }}
       transition={{ duration: 0.2, ease: 'easeOut' }}
       style={{
-        position:       'fixed',
-        top:            '28px',
-        left:           0,
-        right:          0,
-        margin:         '0 auto',
-        width:          'fit-content',
-        maxWidth:       '360px',
-        zIndex:         9999,
-        display:        'flex',
-        alignItems:     'center',
-        gap:            '10px',
-        padding:        '12px 20px',
-        borderRadius:   'var(--r-lg)',
-        background:     'var(--c-800)',
-        border:         '1px solid var(--border)',
-        boxShadow:      '0 8px 32px rgba(0,0,0,0.6)',
+        position:    'fixed',
+        top:         '20px',
+        left:        '16px',
+        right:       '16px',
+        margin:      '0 auto',
+        /* Cap width on larger screens, full-width minus padding on mobile */
+        maxWidth:    '360px',
+        width:       'calc(100vw - 32px)',
+        zIndex:      9999,
+        display:     'flex',
+        alignItems:  'center',
+        gap:         '10px',
+        padding:     '12px 16px',
+        borderRadius:'var(--r-lg)',
+        background:  'var(--c-800)',
+        border:      '1px solid var(--border)',
+        boxShadow:   '0 8px 32px rgba(0,0,0,0.6)',
+        boxSizing:   'border-box',
       }}
     >
       <FiAlertCircle size={15} style={{ color: 'var(--amber)', flexShrink: 0 }} />
       <span style={{
-        fontSize:   '13px',
+        fontSize:   'clamp(12px, 3.5vw, 13px)',
         fontFamily: 'var(--font-body)',
         color:      'var(--p-high)',
-        whiteSpace: 'nowrap',
+        flex:       1,
+        wordBreak:  'break-word',
       }}>
         {message}
       </span>
@@ -78,7 +78,6 @@ export default function ErrorBanner({ message }) {
     );
   }
 
-  // All other errors — inline banner
   return (
     <AnimatePresence>
       {visible && (
@@ -89,18 +88,19 @@ export default function ErrorBanner({ message }) {
           exit={{    opacity: 0, height: 0 }}
           transition={{ duration: 0.2 }}
           style={{
-            overflow:     'hidden',
-            display:      'flex',
-            alignItems:   'flex-start',
-            gap:          '10px',
-            padding:      '12px 16px',
-            borderRadius: 'var(--r-md)',
-            background:   'var(--red-soft)',
-            border:       '1px solid var(--red-border)',
-            color:        'var(--red)',
-            fontSize:     '13px',
-            lineHeight:   '1.5',
-            fontFamily:   'var(--font-body)',
+            overflow:   'hidden',
+            display:    'flex',
+            alignItems: 'flex-start',
+            gap:        '10px',
+            padding:    '12px 14px',
+            borderRadius:'var(--r-md)',
+            background: 'var(--red-soft)',
+            border:     '1px solid var(--red-border)',
+            color:      'var(--red)',
+            fontSize:   'clamp(12px, 3vw, 13px)',
+            lineHeight: '1.5',
+            fontFamily: 'var(--font-body)',
+            wordBreak:  'break-word',
           }}
         >
           <FiAlertCircle size={14} style={{ flexShrink: 0, marginTop: '1px' }} />
