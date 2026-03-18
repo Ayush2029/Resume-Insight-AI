@@ -1,28 +1,18 @@
-/**
- * components/resume/StepIndicator.jsx
- * Three-step progress: upload → extract → fetch
- * Terminal log aesthetic.
- */
-
 import { motion } from 'framer-motion';
 import { FiCheck, FiLoader } from 'react-icons/fi';
-
 const STEPS = [
   { key: 'upload',  label: 'Upload PDF',      cmd: '01' },
   { key: 'extract', label: 'Extract Links',   cmd: '02' },
   { key: 'fetch',   label: 'Fetch Profile',   cmd: '03' },
 ];
-
 export default function StepIndicator({ activeStep }) {
   const activeIdx = STEPS.findIndex(s => s.key === activeStep);
   const allDone   = activeStep === 'done';
-
   return (
     <div style={{ display: 'flex', alignItems: 'flex-start', gap: 0, width: '100%' }}>
       {STEPS.map((step, i) => {
         const done   = allDone || i < activeIdx;
         const active = !allDone && i === activeIdx;
-
         return (
           <div
             key={step.key}
@@ -68,7 +58,6 @@ export default function StepIndicator({ activeStep }) {
                   <span style={{ color: 'var(--p-low)' }}>{step.cmd}</span>
                 )}
               </motion.div>
-
               <span
                 style={{
                   fontSize:    '11px',
@@ -81,7 +70,6 @@ export default function StepIndicator({ activeStep }) {
                 {step.label}
               </span>
             </div>
-
             {/* Connector */}
             {i < STEPS.length - 1 && (
               <div
