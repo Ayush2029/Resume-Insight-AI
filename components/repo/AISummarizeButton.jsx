@@ -1,11 +1,3 @@
-/**
- * components/repo/AISummarizeButton.jsx
- *
- * Calls /api/summarize on each click (no caching — fresh every time).
- * Shows source badge (README vs source files), handles all error cases,
- * and is fully responsive for mobile.
- */
-
 import { useState }                from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiZap, FiRefreshCw, FiExternalLink } from 'react-icons/fi';
@@ -13,20 +5,17 @@ import Spinner from '../ui/Spinner';
 
 export default function AISummarizeButton({ repo }) {
   const [loading,   setLoading]   = useState(false);
-  const [result,    setResult]    = useState(null);   // { summary, source }
+  const [result,    setResult]    = useState(null);   
   const [isError,   setIsError]   = useState(false);
   const [isKeyErr,  setIsKeyErr]  = useState(false);
   const [isRateErr, setIsRateErr] = useState(false);
-
   async function handleClick() {
     if (loading) return;
-
     setLoading(true);
     setResult(null);
     setIsError(false);
     setIsKeyErr(false);
     setIsRateErr(false);
-
     try {
       const res = await fetch('/api/summarize', {
         method:  'POST',
@@ -38,12 +27,9 @@ export default function AISummarizeButton({ repo }) {
           defaultBranch: repo.default_branch ?? 'main',
         }),
       });
-
       const data = await res.json();
       if (!res.ok) throw Object.assign(new Error(data.error || 'Summarization failed'), { status: res.status });
-
       setResult(data);
-
     } catch (err) {
       const msg      = err.message ?? 'Summarization failed.';
       const isKey    = msg.includes('GROQ_API_KEY');
@@ -56,20 +42,16 @@ export default function AISummarizeButton({ repo }) {
       setLoading(false);
     }
   }
-
   const btnBg     = result && !isError ? 'var(--c-800)'    : 'var(--lime-soft)';
   const btnColor  = result && !isError ? 'var(--p-mid)'    : 'var(--lime)';
   const btnBorder = result && !isError ? 'var(--border)'   : 'rgba(181,248,87,.18)';
-
   const BtnIcon  = loading ? () => <Spinner size={12} color={btnColor} /> : result ? FiRefreshCw : FiZap;
   const btnLabel = loading ? 'Generating…' : result ? 'Regenerate' : 'Project Summary';
-
   const sourceBadge = result?.source === 'readme'
     ? { label: 'README', color: 'var(--lime)', bg: 'var(--lime-soft)' }
     : result?.source === 'files'
     ? { label: 'Source code', color: 'var(--sky)', bg: 'var(--sky-soft)' }
     : null;
-
   return (
     <div>
       <button
@@ -100,7 +82,6 @@ export default function AISummarizeButton({ repo }) {
         <BtnIcon size={12} />
         {btnLabel}
       </button>
-
       <AnimatePresence mode="wait">
         {result && (
           <motion.div
@@ -138,7 +119,6 @@ export default function AISummarizeButton({ repo }) {
                   </a>
                 </div>
               ) : isRateErr ? (
-                /* Rate limit hit */
                 <div style={{ fontSize: '13px', fontFamily: 'var(--font-body)', lineHeight: 1.6 }}>
                   <p style={{ color: 'var(--amber)', margin: '0 0 4px', fontWeight: 600 }}>
                     Rate limit reached
@@ -148,7 +128,6 @@ export default function AISummarizeButton({ repo }) {
                   </p>
                 </div>
               ) : (
-                /* Normal result or generic error */
                 <>
                   <p style={{ fontSize: '13px', lineHeight: 1.7, color: isError ? 'var(--red)' : 'var(--p-mid)', fontFamily: 'var(--font-body)', margin: 0 }}>
                     {result.summary}
