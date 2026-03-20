@@ -1,12 +1,6 @@
-/**
- * pages/_app.js
- * Global app wrapper — fonts, viewport meta, global styles.
- */
-
 import '../styles/globals.css';
 import Head             from 'next/head';
 import { Fira_Code, DM_Sans } from 'next/font/google';
-
 const firaCode = Fira_Code({
   subsets:  ['latin'],
   variable: '--font-display',
@@ -14,14 +8,12 @@ const firaCode = Fira_Code({
   display:  'swap',
   preload:  true,
 });
-
 const dmSans = DM_Sans({
   subsets:  ['latin'],
   variable: '--font-body',
   display:  'swap',
   preload:  true,
 });
-
 const firaCodeMono = Fira_Code({
   subsets:  ['latin'],
   variable: '--font-mono',
@@ -29,7 +21,6 @@ const firaCodeMono = Fira_Code({
   display:  'swap',
   preload:  false,
 });
-
 export default function App({ Component, pageProps }) {
   return (
     <>
