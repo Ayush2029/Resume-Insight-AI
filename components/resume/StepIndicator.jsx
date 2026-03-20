@@ -1,12 +1,5 @@
-/**
- * components/resume/StepIndicator.jsx
- * Three-step progress: upload → extract → fetch
- * Responsive: connector lines shrink gracefully on narrow screens.
- */
-
 import { motion } from 'framer-motion';
 import { FiCheck, FiLoader } from 'react-icons/fi';
-
 const STEPS = [
   { key: 'upload',  label: 'Upload PDF',    cmd: '01' },
   { key: 'extract', label: 'Extract Links', cmd: '02' },
@@ -16,7 +9,6 @@ const STEPS = [
 export default function StepIndicator({ activeStep }) {
   const activeIdx = STEPS.findIndex(s => s.key === activeStep);
   const allDone   = activeStep === 'done';
-
   return (
     <div
       role="progressbar"
@@ -29,7 +21,6 @@ export default function StepIndicator({ activeStep }) {
       {STEPS.map((step, i) => {
         const done   = allDone || i < activeIdx;
         const active = !allDone && i === activeIdx;
-
         return (
           <div
             key={step.key}
@@ -76,7 +67,6 @@ export default function StepIndicator({ activeStep }) {
                   <span style={{ color: 'var(--p-low)' }}>{step.cmd}</span>
                 )}
               </motion.div>
-
               <span style={{
                 fontSize:   'clamp(9px, 2.2vw, 11px)',
                 fontFamily: 'var(--font-body)',
@@ -87,7 +77,6 @@ export default function StepIndicator({ activeStep }) {
                 {step.label}
               </span>
             </div>
-
             {/* Connector line */}
             {i < STEPS.length - 1 && (
               <div
