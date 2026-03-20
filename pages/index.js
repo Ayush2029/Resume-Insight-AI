@@ -1,8 +1,3 @@
-/**
- * pages/index.js — Resume Analyzer
- * Responsive: works on 320px mobile through wide desktop.
- */
-
 import { motion, AnimatePresence } from 'framer-motion';
 import PageShell        from '../components/layout/PageShell';
 import DropZone         from '../components/resume/DropZone';
@@ -12,20 +7,15 @@ import ProfileSkeleton  from '../components/profile/ProfileSkeleton';
 import RepoList         from '../components/repo/RepoList';
 import ErrorBanner      from '../components/ui/ErrorBanner';
 import useResumeAnalyzer from '../hooks/useResumeAnalyzer';
-
 export default function AnalyzerPage() {
   const { status, step, error, data, submit, reset } = useResumeAnalyzer();
-
   const isLoading = status === 'extracting' || status === 'fetching';
   const isReady   = status === 'ready';
-
   const loadingMsg =
     status === 'extracting' ? 'Scanning PDF for GitHub links…' :
     status === 'fetching'   ? 'Fetching GitHub profile & repositories…' : '';
-
   return (
     <PageShell>
-
       {/* ── Hero ── */}
       <motion.div
         initial={{ opacity: 0, y: -10 }}
@@ -59,7 +49,6 @@ export default function AnalyzerPage() {
           }} />
           AI-powered
         </div>
-
         <h1 style={{
           fontSize:     'clamp(22px, 5vw, 32px)',
           fontFamily:   'var(--font-display)',
@@ -71,7 +60,6 @@ export default function AnalyzerPage() {
         }}>
           Resume<span style={{ color: 'var(--lime)' }}>Insight</span> AI
         </h1>
-
         <p style={{
           fontSize:   'clamp(13px, 3vw, 15px)',
           color:      'var(--p-mid)',
@@ -86,7 +74,6 @@ export default function AnalyzerPage() {
           Upload a resume PDF. We extract your GitHub profile and analyze every repository with AI.
         </p>
       </motion.div>
-
       {/* ── Upload card ── */}
       <motion.div
         layout
@@ -99,7 +86,6 @@ export default function AnalyzerPage() {
         <div style={{ marginBottom: '20px' }}>
           <StepIndicator activeStep={step} />
         </div>
-
         <AnimatePresence>
           {isLoading && loadingMsg && (
             <motion.p
@@ -120,15 +106,12 @@ export default function AnalyzerPage() {
             </motion.p>
           )}
         </AnimatePresence>
-
         <DropZone onFile={submit} loading={isLoading} />
-
         {error && (
           <div style={{ marginTop: '14px' }}>
             <ErrorBanner message={error} />
           </div>
         )}
-
         {isReady && (
           <div style={{ marginTop: '16px', textAlign: 'center' }}>
             <button
@@ -141,7 +124,6 @@ export default function AnalyzerPage() {
           </div>
         )}
       </motion.div>
-
       {/* ── Results ── */}
       <AnimatePresence mode="wait">
         {isLoading && (
@@ -155,7 +137,6 @@ export default function AnalyzerPage() {
             <RepoList repos={null} loading />
           </motion.div>
         )}
-
         {isReady && data && (
           <motion.div
             key="results"
