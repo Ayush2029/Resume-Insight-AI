@@ -1,8 +1,3 @@
-/**
- * components/ui/StatPill.jsx
- * Fixed: removed duplicate fontWeight declaration.
- * Responsive: uses clamp for font-size to stay readable on small screens.
- */
 export default function StatPill({ icon: Icon, label, value }) {
   return (
     <div
@@ -48,7 +43,7 @@ export default function StatPill({ icon: Icon, label, value }) {
         </p>
         <p style={{
           fontSize:   'clamp(14px, 3.5vw, 17px)',
-          fontWeight: '700',               /* single declaration — bug fix */
+          fontWeight: '700',               
           color:      'var(--p-high)',
           fontFamily: 'var(--font-body)',
           margin:     0,
