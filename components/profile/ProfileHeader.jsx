@@ -1,9 +1,3 @@
-/**
- * components/profile/ProfileHeader.jsx
- * Responsive: stacked avatar+name on mobile, side-by-side on desktop.
- * Stat pills collapse to 2-col grid on narrow screens.
- */
-
 import { motion }  from 'framer-motion';
 import {
   FiUsers, FiBookOpen, FiCalendar, FiTwitter,
@@ -33,7 +27,6 @@ function MetaItem({ icon: Icon, href, children }) {
     transition: 'color 0.14s',
     wordBreak:  'break-word',
   };
-
   if (href) {
     return (
       <a
@@ -63,10 +56,8 @@ export default function ProfileHeader({ profile }) {
     public_repos, followers, following,
     company, blog, twitter, socials = [], created_at,
   } = profile;
-
   const blogHref    = normBlog(blog);
   const blogDisplay = blog?.replace(/^https?:\/\/|^\/\//, '').split('/')[0]; // domain only
-
   return (
     <motion.section
       initial={{ opacity: 0, y: 16 }}
@@ -77,10 +68,8 @@ export default function ProfileHeader({ profile }) {
     >
       {/* Lime top accent bar */}
       <div style={{ height: '3px', background: 'linear-gradient(90deg, var(--lime), var(--lime-dim), transparent)' }} />
-
       <div style={{ padding: 'var(--card-padding)' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
-
           {/* Avatar + name row */}
           <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', flexWrap: 'wrap' }}>
             <a href={url} target="_blank" rel="noopener noreferrer" style={{ flexShrink: 0 }}>
@@ -98,7 +87,6 @@ export default function ProfileHeader({ profile }) {
                 }}
               />
             </a>
-
             <div style={{ flex: 1, minWidth: '160px' }}>
               <h2 style={{
                 fontFamily: 'var(--font-body)',
@@ -110,7 +98,6 @@ export default function ProfileHeader({ profile }) {
               }}>
                 {name}
               </h2>
-
               <a
                 href={url}
                 target="_blank"
@@ -128,7 +115,6 @@ export default function ProfileHeader({ profile }) {
               >
                 @{username}
               </a>
-
               {bio && (
                 <p style={{
                   fontSize:   '13px',
@@ -141,7 +127,6 @@ export default function ProfileHeader({ profile }) {
                   {bio}
                 </p>
               )}
-
               {/* Meta items — wrap naturally on mobile */}
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px 14px' }}>
                 {company    && <MetaItem icon={FiMapPin}>{company}</MetaItem>}
@@ -160,7 +145,6 @@ export default function ProfileHeader({ profile }) {
               </div>
             </div>
           </div>
-
           {/* Stat pills — 3 cols desktop, 2 cols mobile via inline media override */}
           <div
             style={{
@@ -168,17 +152,14 @@ export default function ProfileHeader({ profile }) {
               gridTemplateColumns: 'repeat(3, 1fr)',
               gap:                 '8px',
             }}
-            /* We rely on the container being <530px to collapse */
             className="stat-grid"
           >
             <StatPill icon={FiBookOpen}  label="Repos"     value={(public_repos ?? 0).toLocaleString()} />
             <StatPill icon={FiUsers}     label="Followers"  value={(followers    ?? 0).toLocaleString()} />
             <StatPill icon={FiUserCheck} label="Following"  value={(following    ?? 0).toLocaleString()} />
           </div>
-
         </div>
       </div>
-
       <style>{`
         @media (max-width: 420px) {
           .stat-grid {
