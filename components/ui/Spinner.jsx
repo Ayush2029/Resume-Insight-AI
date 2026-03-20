@@ -1,6 +1,3 @@
-/**
- * components/ui/Spinner.jsx
- */
 export default function Spinner({ size = 20, color = 'var(--lime)' }) {
   return (
     <svg
