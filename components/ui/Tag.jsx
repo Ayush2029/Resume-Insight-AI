@@ -1,6 +1,3 @@
-/**
- * components/ui/Tag.jsx
- */
 const VARIANTS = {
   default: { bg: 'var(--c-700)',      color: 'var(--p-mid)',   border: 'var(--border)'        },
   lime:    { bg: 'var(--lime-soft)',  color: 'var(--lime)',    border: 'rgba(181,248,87,.18)' },
@@ -9,7 +6,6 @@ const VARIANTS = {
   red:     { bg: 'var(--red-soft)',   color: 'var(--red)',     border: 'var(--red-border)'    },
   green:   { bg: 'var(--green-soft)', color: 'var(--green)',   border: 'rgba(63,185,80,.2)'   },
 };
-
 export default function Tag({ children, variant = 'default', icon: Icon }) {
   const v = VARIANTS[variant] ?? VARIANTS.default;
   return (
