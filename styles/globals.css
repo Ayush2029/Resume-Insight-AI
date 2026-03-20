@@ -1,10 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-/* ─────────────────────────────────────────────────────────────
-   DESIGN TOKENS
-   ───────────────────────────────────────────────────────────── */
+/* DESIGN TOKENS */
 :root {
   /* Canvas */
   --c-950: #0a0c10;
@@ -14,59 +11,48 @@
   --c-600: #30363d;
   --c-500: #484f58;
   --c-400: #6e7681;
-
   /* Lime — primary accent */
   --lime:       #b5f857;
   --lime-dim:   #7ec832;
   --lime-glow:  rgba(181,248,87,.12);
   --lime-soft:  rgba(181,248,87,.08);
-
   /* Amber */
   --amber:      #f0a500;
   --amber-soft: rgba(240,165,0,.1);
-
   /* Sky */
   --sky:        #58b4f8;
   --sky-soft:   rgba(88,180,248,.1);
-
   /* Red */
   --red:        #f85149;
   --red-soft:   rgba(248,81,73,.1);
   --red-border: rgba(248,81,73,.25);
-
   /* Green */
   --green:      #3fb950;
   --green-soft: rgba(63,185,80,.1);
-
   /* Prose */
   --p-high:  #e6edf3;
   --p-mid:   #8b949e;
   --p-low:   #484f58;
   --p-muted: #30363d;
-
   /* Borders */
   --border:       #30363d;
   --border-light: #21262d;
-
   /* Shadows */
   --shadow-sm: 0 1px 3px rgba(0,0,0,.4);
   --shadow-md: 0 4px 16px rgba(0,0,0,.5);
   --shadow-lg: 0 8px 32px rgba(0,0,0,.6);
-
   /* Radii */
   --r-sm: 6px;
   --r-md: 10px;
   --r-lg: 14px;
   --r-xl: 20px;
-
   /* Layout — desktop */
   --page-padding:    60px 16px 80px;
   --content-max:     760px;
   --card-padding:    24px;
   --repo-padding:    18px 20px;
 }
-
-/* ── Mobile overrides ─────────────────────────────────────── */
+/*  Mobile overrides */
 @media (max-width: 480px) {
   :root {
     --page-padding:  40px 12px 60px;
@@ -74,13 +60,9 @@
     --repo-padding:  14px 14px;
   }
 }
-
-/* ─────────────────────────────────────────────────────────────
-   BASE
-   ───────────────────────────────────────────────────────────── */
+/*  BASE */
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-
 body {
   background-color: var(--c-950);
   color: var(--p-high);
@@ -88,16 +70,10 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: var(--font-body), ui-sans-serif, system-ui, sans-serif;
   min-height: 100vh;
-  /* prevent horizontal scroll on mobile */
   overflow-x: hidden;
 }
-
 ::selection { background: var(--lime-glow); color: var(--lime); }
-
-/* ─────────────────────────────────────────────────────────────
-   UTILITY CLASSES
-   ───────────────────────────────────────────────────────────── */
-
+/* UTILITY CLASSES */
 .card {
   background:    var(--c-800);
   border:        1px solid var(--border);
@@ -108,7 +84,6 @@ body {
   border:        1px solid var(--border-light);
   border-radius: var(--r-md);
 }
-
 /* Buttons */
 .btn-lime {
   display:         inline-flex;
@@ -136,7 +111,6 @@ body {
 }
 .btn-lime:active:not(:disabled) { transform: translateY(0); }
 .btn-lime:disabled { opacity: 0.4; cursor: not-allowed; }
-
 .btn-ghost {
   display:      inline-flex;
   align-items:  center;
@@ -159,7 +133,6 @@ body {
   color:        var(--p-high);
   border-color: var(--c-500);
 }
-
 /* Skeleton shimmer */
 .skeleton {
   background:      linear-gradient(90deg, var(--c-700) 25%, var(--c-600) 50%, var(--c-700) 75%);
@@ -167,7 +140,6 @@ body {
   animation:       shimmer 1.6s infinite linear;
   border-radius:   var(--r-sm);
 }
-
 /* Terminal cursor */
 .cursor::after {
   content:     '▋';
@@ -175,13 +147,11 @@ body {
   animation:   blink 1s step-end infinite;
   margin-left: 2px;
 }
-
 /* Scrollbar */
 ::-webkit-scrollbar        { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track  { background: transparent; }
 ::-webkit-scrollbar-thumb  { background: var(--border); border-radius: 99px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--c-500); }
-
 /* Prose (README rendering) */
 .prose-dark {
   --tw-prose-body:         var(--p-mid);
@@ -204,17 +174,14 @@ body {
 .prose-dark img { border-radius: var(--r-md); border: 1px solid var(--border); max-width: 100%; }
 .prose-dark code { font-family: var(--font-mono); }
 .prose-dark pre  { border: 1px solid var(--border); overflow-x: auto; }
-
-/* ── Responsive helpers ──────────────────────────────────── */
+/*  Responsive helpers  */
 .hide-mobile  { display: block; }
 .show-mobile  { display: none;  }
-
 @media (max-width: 480px) {
   .hide-mobile { display: none;  }
   .show-mobile { display: block; }
 }
-
-/* ── Keyframes ───────────────────────────────────────────── */
+/* Keyframes */
 @keyframes fade-up {
   0%   { opacity: 0; transform: translateY(12px); }
   100% { opacity: 1; transform: translateY(0);    }
