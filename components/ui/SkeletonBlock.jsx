@@ -1,6 +1,3 @@
-/**
- * components/ui/SkeletonBlock.jsx
- */
 export default function SkeletonBlock({ style = {}, className = '' }) {
   return (
     <div
