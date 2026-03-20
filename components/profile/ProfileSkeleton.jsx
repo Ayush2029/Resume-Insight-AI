@@ -1,8 +1,4 @@
-/**
- * components/profile/ProfileSkeleton.jsx
- */
 import SkeletonBlock from '../ui/SkeletonBlock';
-
 export default function ProfileSkeleton() {
   return (
     <div className="card" style={{ overflow: 'hidden', marginBottom: '16px' }}>
