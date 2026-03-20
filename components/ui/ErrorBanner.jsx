@@ -1,13 +1,3 @@
-/**
- * components/ui/ErrorBanner.jsx
- *
- * "No GitHub links found" → centered toast (auto-dismisses after 4 s).
- * All other errors → inline banner below the dropzone.
- *
- * Accessibility: role="alert" on inline banner, aria-live on toast.
- * Mobile: toast stays within safe horizontal bounds.
- */
-
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiAlertCircle } from 'react-icons/fi';
 import { useState, useEffect, useCallback } from 'react';
@@ -17,7 +7,6 @@ function Toast({ message, onClose }) {
     const t = setTimeout(onClose, 4000);
     return () => clearTimeout(t);
   }, [onClose]);
-
   return (
     <motion.div
       role="status"
@@ -60,17 +49,12 @@ function Toast({ message, onClose }) {
 
 export default function ErrorBanner({ message }) {
   const [visible, setVisible] = useState(false);
-
   const hide = useCallback(() => setVisible(false), []);
-
   useEffect(() => {
     setVisible(!!message);
   }, [message]);
-
   if (!message) return null;
-
   const isNoLinks = message.startsWith('No GitHub links found');
-
   if (isNoLinks) {
     return (
       <AnimatePresence>
@@ -78,7 +62,6 @@ export default function ErrorBanner({ message }) {
       </AnimatePresence>
     );
   }
-
   return (
     <AnimatePresence>
       {visible && (
