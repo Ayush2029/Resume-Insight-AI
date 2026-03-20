@@ -1,8 +1,3 @@
-/**
- * components/repo/RepoCard.jsx
- * Fully responsive — stacks meta on narrow screens.
- */
-
 import { motion }           from 'framer-motion';
 import { FiClock, FiCode }  from 'react-icons/fi';
 import Tag                  from '../ui/Tag';
@@ -36,7 +31,6 @@ export default function RepoCard({ repo, index = 0 }) {
   const langVariant = LANG_VARIANT[language] ?? 'default';
   const ago  = timeAgo(lastCommitDate);
   const date = shortDate(lastCommitDate);
-
   return (
     <motion.article
       initial={{ opacity: 0, y: 12 }}
@@ -67,7 +61,6 @@ export default function RepoCard({ repo, index = 0 }) {
       >
         {name}
       </a>
-
       {/* Description */}
       {description && (
         <p style={{
@@ -85,7 +78,6 @@ export default function RepoCard({ repo, index = 0 }) {
           {description}
         </p>
       )}
-
       {/* Meta row — wraps gracefully on mobile */}
       <div style={{
         display:    'flex',
@@ -97,7 +89,6 @@ export default function RepoCard({ repo, index = 0 }) {
         borderTop:  '1px solid var(--border)',
       }}>
         {language && <Tag icon={FiCode} variant={langVariant}>{language}</Tag>}
-
         {ago && (
           <span style={{
             display:    'flex',
@@ -113,7 +104,6 @@ export default function RepoCard({ repo, index = 0 }) {
           </span>
         )}
       </div>
-
       {/* AI Summary button */}
       <div style={{ marginTop: '14px' }}>
         <AISummarizeButton repo={repo} />
