@@ -1,47 +1,34 @@
-/**
- * components/resume/DropZone.jsx
- * Drag-and-drop + click upload. Touch-friendly on mobile.
- */
-
 import { useRef, useState } from 'react';
 import { motion }           from 'framer-motion';
 import { FiUploadCloud, FiFileText, FiX } from 'react-icons/fi';
 import Spinner from '../ui/Spinner';
-
 export default function DropZone({ onFile, loading = false }) {
   const [dragging, setDragging] = useState(false);
   const [fileName, setFileName] = useState(null);
   const inputRef               = useRef(null);
-
   function accept(file) {
     if (!file) return;
     setFileName(file.type === 'application/pdf' ? file.name : null);
     onFile(file);
   }
-
   function handleDrop(e) {
     e.preventDefault();
     setDragging(false);
     accept(e.dataTransfer.files[0]);
   }
-
   function handleDrag(e, active) {
     e.preventDefault();
     e.stopPropagation();
     setDragging(active);
   }
-
   function clear(e) {
     e.stopPropagation();
     setFileName(null);
     if (inputRef.current) inputRef.current.value = '';
   }
-
   const active = dragging && !loading;
-
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-
       {/* Drop area */}
       <motion.div
         role="button"
@@ -72,7 +59,6 @@ export default function DropZone({ onFile, loading = false }) {
           outline:        'none',
           WebkitTapHighlightColor: 'transparent',
         }}
-        // Highlight on keyboard focus
         onFocus={e  => { if (!loading) e.currentTarget.style.borderColor = 'var(--lime)'; }}
         onBlur={e   => e.currentTarget.style.borderColor = active ? 'var(--lime)' : 'var(--border)'}
       >
@@ -84,7 +70,6 @@ export default function DropZone({ onFile, loading = false }) {
           disabled={loading}
           onChange={e => accept(e.target.files[0])}
         />
-
         {/* Loading overlay */}
         {loading && (
           <div
@@ -109,7 +94,6 @@ export default function DropZone({ onFile, loading = false }) {
             </p>
           </div>
         )}
-
         {/* Upload icon */}
         <div style={{
           display:        'flex',
@@ -126,7 +110,6 @@ export default function DropZone({ onFile, loading = false }) {
         }}>
           <FiUploadCloud size={22} />
         </div>
-
         {/* Text */}
         <div style={{ textAlign: 'center' }}>
           <p style={{
@@ -144,7 +127,6 @@ export default function DropZone({ onFile, loading = false }) {
           </p>
         </div>
       </motion.div>
-
       {/* File pill (after selection) */}
       {fileName && !loading && (
         <motion.div
