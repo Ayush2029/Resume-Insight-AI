@@ -1,12 +1,6 @@
-/**
- * components/layout/PageShell.jsx
- * Responsive layout shell — adapts padding and max-width for mobile/desktop.
- */
-
 export default function PageShell({ children }) {
   return (
     <div style={{ minHeight: '100vh', background: 'var(--c-950)' }}>
-
       {/* Dot grid background */}
       <div
         aria-hidden="true"
@@ -20,7 +14,6 @@ export default function PageShell({ children }) {
           opacity:         0.25,
         }}
       />
-
       {/* Radial lime glow — top centre */}
       <div
         aria-hidden="true"
@@ -36,7 +29,6 @@ export default function PageShell({ children }) {
           zIndex:        0,
         }}
       />
-
       <main
         style={{
           position: 'relative',
